@@ -3,7 +3,7 @@ using System;
 
 namespace BuilderPattern
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -19,7 +19,7 @@ namespace BuilderPattern
         public IBuilder SetTripComputer(bool tripComputer);
         public IBuilder SetGps(bool gps);
     }
-
+    
     public class Car
     {
         public int Seats { get; set; }
@@ -47,64 +47,76 @@ Engine: {Engine}
 Tripcomputer: {TripComputer}
 Gps: {Gps}";
     }
-}
 
-public class CarManualBuilder : IBuilder
-{
-    public Manual Manual { get; set; }
-
-    public IBuilder Reset()
+    public class CarManualBuilder : IBuilder
     {
-        throw new NotImplementedException();
+        private Manual Manual { get; set; } = new();
+
+        public IBuilder Reset()
+        {
+            Manual = new Manual();
+            return this;
+        }
+
+        public IBuilder SetSeats(int number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBuilder SetEngine(double engine)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBuilder SetTripComputer(bool tripComputer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBuilder SetGps(bool gps)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Manual GetManual()
+        {
+            return Manual;
+        }
     }
 
-    public IBuilder SetSeats(int number)
+    public class CarBuilder : IBuilder
     {
-        throw new NotImplementedException();
-    }
+        private Car Car { get; set; }
 
-    public IBuilder SetEngine(double engine)
-    {
-        throw new NotImplementedException();
-    }
+        public IBuilder Reset()
+        {
+            Car = new Car();
+            return this;
+        }
 
-    public IBuilder SetTripComputer(bool tripComputer)
-    {
-        throw new NotImplementedException();
-    }
+        public IBuilder SetSeats(int number)
+        {
+            throw new NotImplementedException();
+        }
 
-    public IBuilder SetGps(bool gps)
-    {
-        throw new NotImplementedException();
-    }
-}
+        public IBuilder SetEngine(double engine)
+        {
+            throw new NotImplementedException();
+        }
 
-public class CarBuilder : IBuilder
-{
-    public Car Car { get; set; }
+        public IBuilder SetTripComputer(bool tripComputer)
+        {
+            throw new NotImplementedException();
+        }
 
-    public IBuilder Reset()
-    {
-        throw new NotImplementedException();
-    }
+        public IBuilder SetGps(bool gps)
+        {
+            throw new NotImplementedException();
+        }
 
-    public IBuilder SetSeats(int number)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IBuilder SetEngine(double engine)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IBuilder SetTripComputer(bool tripComputer)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IBuilder SetGps(bool gps)
-    {
-        throw new NotImplementedException();
+        public Car GetManual()
+        {
+            return Car;
+        }
     }
 }
