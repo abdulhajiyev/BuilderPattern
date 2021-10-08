@@ -7,7 +7,18 @@ namespace BuilderPattern
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Director director  = new Director();
+            CarBuilder builder = new CarBuilder();
+            CarManualBuilder manualBuilder = new CarManualBuilder();
+            director.MakeSportsCar(builder);
+            director.MakeSUV(manualBuilder);
+            Car car = builder.GetCar();
+            Manual manual = manualBuilder.GetManual();
+
+            Console.WriteLine(car);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(manual);
         }
     }
 
@@ -16,8 +27,8 @@ namespace BuilderPattern
         public IBuilder Reset();
         public IBuilder SetSeats(int number);
         public IBuilder SetEngine(double engine);
-        public IBuilder SetTripComputer(bool tripComputer);
-        public IBuilder SetGps(bool gps);
+        public IBuilder SetTripComputer();
+        public IBuilder SetGps();
     }
     
     public class Car
@@ -60,28 +71,29 @@ Gps: {Gps}";
 
         public IBuilder SetSeats(int number)
         {
-            throw new NotImplementedException();
+            Manual.Seats = number;
+            return this;
         }
 
         public IBuilder SetEngine(double engine)
         {
-            throw new NotImplementedException();
+            Manual.Engine = engine;
+            return this;
         }
 
-        public IBuilder SetTripComputer(bool tripComputer)
+        public IBuilder SetTripComputer()
         {
-            throw new NotImplementedException();
+           Manual.TripComputer = true;
+           return this;
         }
 
-        public IBuilder SetGps(bool gps)
+        public IBuilder SetGps()
         {
-            throw new NotImplementedException();
+            Manual.Gps = true;
+            return this;
         }
 
-        public Manual GetManual()
-        {
-            return Manual;
-        }
+        public Manual GetManual() => Manual;
     }
 
     public class CarBuilder : IBuilder
@@ -96,27 +108,49 @@ Gps: {Gps}";
 
         public IBuilder SetSeats(int number)
         {
-            throw new NotImplementedException();
+            Car.Seats = number;
+            return this;
         }
 
         public IBuilder SetEngine(double engine)
         {
-            throw new NotImplementedException();
+            Car.Engine = engine;
+            return this;
         }
 
-        public IBuilder SetTripComputer(bool tripComputer)
+        public IBuilder SetTripComputer()
         {
-            throw new NotImplementedException();
+            Car.TripComputer = true;
+            return this;
         }
 
-        public IBuilder SetGps(bool gps)
+        public IBuilder SetGps()
         {
-            throw new NotImplementedException();
+            Car.Gps = true;
+            return this;
         }
 
-        public Car GetManual()
+        public Car GetCar() => Car;
+    }
+
+    public class Director
+    {
+        public void MakeSUV(IBuilder builder)
         {
-            return Car;
+            builder.Reset();
+            builder.SetSeats(6);
+            builder.SetEngine(3.8);
+            builder.SetTripComputer();
+            builder.SetGps();
+        }
+
+        public void MakeSportsCar(IBuilder builder)
+        {
+            builder.Reset();
+            builder.SetSeats(2);
+            builder.SetEngine(2.4);
+            builder.SetTripComputer();
+            builder.SetGps();
         }
     }
 }
